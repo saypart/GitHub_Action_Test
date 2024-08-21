@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         var errorCode = "ARGUMENT_NOT_VALID";
         var message = exception.getBindingResult().getFieldErrors()
                 .stream()
-                .map(error -> STR."\{error.getField()}: \{error.getDefaultMessage()}")
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining());
         var errorResponse = new ErrorResponse(
                 errorCode,
