@@ -39,13 +39,17 @@ public record SignUpRequest(
         @NotNull(message = "IsPrivacyPolicyAccepted cannot be null")
         String isPrivacyPolicyAccepted
 ) {
+        @Schema(hidden = true)
         public User.Gender getGenderAsGender() {
                 return User.Gender.valueOf(gender);
         }
+
+        @Schema(hidden = true)
         public Boolean getIsTermsAcceptedAsBoolean() {
                 return Boolean.parseBoolean(isTermsAccepted);
         }
 
+        @Schema(hidden = true)
         public Boolean getIsPrivacyPolicyAcceptedAsBoolean() {
                 return Boolean.parseBoolean(isPrivacyPolicyAccepted);
         }
