@@ -56,15 +56,15 @@ jobs:
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 
-      - name: Submit dependencies / Deploy to remote server via SCP
-        if: success()  # 빌드가 성공했을 때만 실행
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          scp -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
+#      - name: Submit dependencies / Deploy to remote server via SCP
+#        if: success()  # 빌드가 성공했을 때만 실행
+#        env:
+#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+#          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+#          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+#        run: |
+#          mkdir -p ~/.ssh
+#          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#          scp -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
