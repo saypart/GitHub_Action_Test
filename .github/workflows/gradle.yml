@@ -65,7 +65,7 @@ jobs:
 #          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_USER: users
-          REMOTE_HOST: 43.203.196.224
+          REMOTE_HOST: 43.203.196.224:22
           REMOTE_PATH: /home/ubuntu/onego
         run: |
           mkdir -p ~/.ssh
