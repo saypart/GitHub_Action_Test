@@ -65,6 +65,7 @@ jobs:
 #          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
 #          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          eval "$(ssh-agent -s)"
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_action_key
           chmod 600 ~/.ssh/github_action_key
