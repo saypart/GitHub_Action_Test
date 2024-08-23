@@ -73,7 +73,7 @@ jobs:
 
       - name: scp to EC2 and Copy build file
         run: |
-          REMOTE_USER="github_action"
+          REMOTE_USER="ec2-user"
           REMOTE_HOST="43.203.169.185"
           REMOTE_PATH="/home/ec2-user/test"
           scp -P 22 -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
