@@ -56,19 +56,22 @@ jobs:
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 
-      - name: Submit dependencies / Deploy to remote server via SCP
+      - name: Submit dependencies / Setup SSH Key
         if: success()  # 빌드가 성공했을 때만 실행
         env:
 #          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 #          REMOTE_USER: ${{ secrets.REMOTE_USER }}
 #          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
 #          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_USER: ubuntu
-          REMOTE_HOST: 43.202.42.188:22
+          REMOTE_HOST: 43.202.42.188
           REMOTE_PATH: /home/ubuntu/onego
         run: |
-          mkdir -p ~/onego
-#          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-#          chmod 600 ~/.ssh/id_rsa
-#          scp -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_action_key
+          chmod 600 ~/.ssh/github_action_key
+
+      - name: SSH to EC2 and deploy
+        run: |
+          scp -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
