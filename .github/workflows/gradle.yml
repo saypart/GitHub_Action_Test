@@ -74,4 +74,4 @@ jobs:
           REMOTE_USER="ubuntu"
           REMOTE_HOST="43.202.42.188"
           REMOTE_PATH="/home/ubuntu/onego"
-          scp -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
+          scp -P 22 -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
