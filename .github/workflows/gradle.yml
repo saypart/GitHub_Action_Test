@@ -58,7 +58,7 @@ jobs:
 
       - name: Submit dependencies / Setup SSH Key
         if: success()  # 빌드가 성공했을 때만 실행
-        env:
+#        env:
 #          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 #          REMOTE_USER: ${{ secrets.REMOTE_USER }}
 #          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
