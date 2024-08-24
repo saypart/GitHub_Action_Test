@@ -67,6 +67,14 @@ jobs:
           chmod 600 ~/.ssh/github_action_key
           ssh-add ~/.ssh/github_action_key
 
+      - name: SSH test
+        if: success()  # 빌드가 성공했을 때만 실행
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          ssh -i .ssh/dev_sevrer ec2-user@43.203.243.110
+          mkdir ~/test
+
       - name: scp to EC2 and Copy build file
         if: success()  # 빌드가 성공했을 때만 실행
         run: |
