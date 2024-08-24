@@ -56,24 +56,10 @@ jobs:
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
-
-      - name: Submit dependencies / Setup SSH Key
+      - name: Setup SSH Key
         if: success()  # 빌드가 성공했을 때만 실행
-
-
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-#          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-#          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
-#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           eval "$(ssh-agent -s)"
           mkdir -p ~/.ssh
@@ -82,6 +68,7 @@ jobs:
           ssh-add ~/.ssh/github_action_key
 
       - name: scp to EC2 and Copy build file
+        if: success()  # 빌드가 성공했을 때만 실행
         run: |
           REMOTE_USER="ec2-user"
           REMOTE_HOST="43.203.243.110"
