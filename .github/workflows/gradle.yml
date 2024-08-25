@@ -67,18 +67,10 @@ jobs:
           chmod 600 ~/.ssh/github_action_key
           ssh-add ~/.ssh/github_action_key
 
-#      - name: SSH test
-#        if: success()  # 빌드가 성공했을 때만 실행
-#        env:
-#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#        run: |
-#          ssh -i ~/.ssh/github_action_key ec2-user@13.124.51.21
-#          mkdir ~/test
-
       - name: scp to EC2 and Copy build file
         if: success()  # 빌드가 성공했을 때만 실행
         run: |
           REMOTE_USER="ec2-user"
           REMOTE_HOST="13.124.51.21"
           REMOTE_PATH="/home/ec2-user/test"
-          scp -i ~/.ssh/github_action_key -o StrictHostKeyChecking=no -r ./build/libs $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
+          scp -i ~/.ssh/github_action_key -o StrictHostKeyChecking=no -r ./build/libs/OnegoManna-0.0.1-SNAPSHOT.jar $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
